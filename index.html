@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Game of Life</title>
+  </head>
+
+ 	<!-- jQuery -->
+  	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+
+  	<!-- React -->
+  	<script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+
+	<!-- CSS -->
+  	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+  	<!-- Bootstrap -->
+  	<script type="text/javascript" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+  	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-bootstrap/0.5pre/assets/css/bootstrap.min.css">
+
+  <body>
+  	<div class="container">
+  	<h2 style="color: skyblue;">Conway's Game of Life</h2>
+  		<div class="control-buttons row col-md-12">
+  			<button class="btn-success">Run</button>
+  			<button class="btn-info">Pause</button>
+  			<button class="btn-danger">Clear</button>
+  			<a id="generations">Generations: </a>
+  		</div>
+	  	<div id="grid">
+			<!-- Square <div> elements will be appended here -->
+			
+	  	</div>
+  	</div>
+
+  	<footer>
+  		<div class="footer-contents">
+  			A <a target="_blank" href="https://www.freecodecamp.com/challenges/build-the-game-of-life">Free Code Camp</a> project developed by <a target="_blank" href="https://github.com/sok213">Sophanarith Sok</a> 
+  		</div>
+  	</footer>
+  	<!-- javascript/react file -->
+  	<script type="text/babel" src="js/javascript.js"></script>
+  </body>
+</html>

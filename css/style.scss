@@ -1,0 +1,77 @@
+body {
+	text-align: center;
+}
+
+.control-buttons {
+	bottom: 10px;
+	top: 10px;
+}
+
+.control-buttons button {
+	height: 30px;
+	width: 80px;
+	outline: none;
+	transition: 0.2s;
+	opacity: 0.85;
+}
+
+.control-buttons button:hover {
+	opacity: 1;
+}
+
+.container {
+	margin-top: 50px;
+	text-align: center;
+}
+
+#generations {
+	font-size: 20px;
+	margin-left: 10px;
+	pointer-events: none;
+}
+
+#grid {
+	padding: 20px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 600px;
+	height: 100%;
+	margin-top: 10px;
+	text-align: center;
+}
+
+.square {
+	position: relative;
+	display: inline-block;
+	height: 10px;
+	width: 10px;
+	border: thin solid lightblue;
+	background-color: black;
+}
+
+.square:hover {
+	background-color: lightgreen;
+}
+
+.row {
+	width: 100%;
+	left: 35px;
+	position: relative;
+	margin-top: -10px;
+}
+
+footer {
+	color: #666666;
+	width: 100%;
+	padding-top: 20px;
+	margin-top: 20px;
+	text-align: center;
+}
+
+.footer-contents {
+	margin-right: auto;
+	margin-left: auto;
+	padding-top: 30px;
+	width: 50%;
+	border-top: thin dotted darkgrey;
+}

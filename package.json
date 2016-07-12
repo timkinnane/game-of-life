@@ -1,0 +1,15 @@
+{
+  "name": "gameoflife",
+  "version": "1.0.0",
+  "description": "Conway's Game of Life project for Free Code Camp",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Sophanarith Sok",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
