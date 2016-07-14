@@ -5,13 +5,13 @@
     <title>Game of Life</title>
   </head>
 
- 	<!-- jQuery -->
-  	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
-
-  	<!-- React -->
+  	<!-- ReactJS -->
   	<script src="js/react.js"></script>
     <script src="js/react-dom.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+
+ 	<!-- jQuery -->
+  	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
 
 	<!-- CSS -->
   	<link rel="stylesheet" type="text/css" href="css/style.css">
@@ -22,7 +22,7 @@
 
   <body>
   	<div class="container">
-  	<h2 style="color: skyblue;">Conway's Game of Life</h2>
+  	<h2 style="color: gray;">Conway's Game of Life</h2>
   		<div class="control-buttons row col-md-12">
   			<button class="btn-success">Run</button>
   			<button class="btn-info">Pause</button>
@@ -30,9 +30,9 @@
   			<a id="generations">Generations: </a>
   		</div>
 	  	<div id="grid">
-			<!-- Square <div> elements will be appended here -->
-			
+			<!-- Square <div> elements will append here -->
 	  	</div>
+	  	<div id="example"></div>
   	</div>
 
   	<footer>
@@ -40,6 +40,7 @@
   			A <a target="_blank" href="https://www.freecodecamp.com/challenges/build-the-game-of-life">Free Code Camp</a> project developed by <a target="_blank" href="https://github.com/sok213">Sophanarith Sok</a> 
   		</div>
   	</footer>
+
   	<!-- javascript/react file -->
   	<script type="text/babel" src="js/javascript.js"></script>
   </body>

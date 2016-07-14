@@ -1,3 +1,11 @@
+$square-color: lightgreen;
+
+@mixin auto-margins-center() {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
 body {
 	text-align: center;
 }
@@ -32,12 +40,10 @@ body {
 
 #grid {
 	padding: 20px;
-	margin-right: auto;
-	margin-left: auto;
 	width: 600px;
 	height: 100%;
 	margin-top: 10px;
-	text-align: center;
+	@include auto-margins-center();
 }
 
 .square {
@@ -45,12 +51,12 @@ body {
 	display: inline-block;
 	height: 10px;
 	width: 10px;
-	border: thin solid lightblue;
+	border: thin solid gray;
 	background-color: black;
 }
 
 .square:hover {
-	background-color: lightgreen;
+	background-color: $square-color;
 }
 
 .row {
@@ -69,9 +75,8 @@ footer {
 }
 
 .footer-contents {
-	margin-right: auto;
-	margin-left: auto;
 	padding-top: 30px;
 	width: 50%;
 	border-top: thin dotted darkgrey;
+	@include auto-margins-center();
 }
