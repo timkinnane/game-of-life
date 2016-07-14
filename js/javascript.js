@@ -33,7 +33,7 @@ $(function() {
 			var createSquares = function() {
 				var squares = [];
 				for(var i=50; i>0; i--) {
-					squares.push(<div className='square' id={idNumber}></div>);
+					squares.push(<div className='square' key={idNumber} id={idNumber}></div>);
 					idNumber--;
 				}
 				return squares;
@@ -42,7 +42,7 @@ $(function() {
 			var createRows = function() {
 				var rows = [];
 				for(var i=30; i>0; i--) {
-					rows.push(<div className='row'>{createSquares()}</div>);
+					rows.push(<div className='row' key={i}>{createSquares()}</div>);
 				}
 				return rows;
 			};
