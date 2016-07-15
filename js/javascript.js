@@ -39,7 +39,7 @@ $(function() {
 					<div className="control-buttons row col-md-12">
 		  			<button className="btn-success" onClick={this.runGame}>Run</button>
 		  			<button className="btn-info">Pause</button>
-		  			<button className="btn-danger">Clear</button>
+		  			<button className="btn-danger" onClick={this.clearGame}>Clear</button>
 		  			<a id="generations">Generations: </a>
 		  		</div>
 		  		<div id="grid">{createRows()}</div>
@@ -60,10 +60,22 @@ $(function() {
 			}
 		},
 
+		clearGame: function() {
+			//Resets the generation count back to 0.
+			this.setState({generationCount: 0});
+			$('#generations').html('Generations: 0');
+
+			//Change class of all square ids back to being dead.
+			for(var id = 1500; id > 0; id--) {
+				if($("#" + id.toString()).hasClass('alive')) {
+					$("#" + id.toString()).removeClass('alive');
+					$("#" + id.toString()).addClass('dead');
+				}
+			}
+		},
+
 		//Function that runs the game.
 		runGame: function() {
-			this.state.generationCount++;
-			$('#generations').html('Generations: ' + this.state.generationCount);
 
 			//for loop that iterates through all square id's.
 			for(var id = 1500; id > 0; id--) {
@@ -89,20 +101,43 @@ $(function() {
 						) {
 						currentSq.removeClass('alive');
 						currentSq.addClass('dead');
+
+						this.state.generationCount++;
+						$('#generations').html('Generations: ' + this.state.generationCount);
 					}
-					//if top square is alive. 
+					//if top square is alive and the others are dead.
 					else if
 						(sqTop.hasClass('alive') && sqBott.hasClass('dead') 
 							&& sqLeft.hasClass('dead') && sqRight.hasClass('dead') 
 							&& sqTopLeft.hasClass('dead') && sqTopRight.hasClass('dead') 
 							&& sqBottLeft.hasClass('dead') && sqBottRight.hasClass('dead')
-						) {
+						) {	
 						currentSq.removeClass('alive');
 						currentSq.addClass('dead');
 						var runGame = this.runGame;
 						setTimeout(function() {
 							runGame();
-						}, 300);
+						}, 200);
+
+						this.state.generationCount++;
+						$('#generations').html('Generations: ' + this.state.generationCount);
+					} 
+					//if bottom square is alive and others are dead.
+					else if
+						(sqBott.hasClass('alive') && sqTop.hasClass('dead') 
+							&& sqLeft.hasClass('dead') && sqRight.hasClass('dead') 
+							&& sqTopLeft.hasClass('dead') && sqTopRight.hasClass('dead') 
+							&& sqBottLeft.hasClass('dead') && sqBottRight.hasClass('dead')
+					  ) {
+							currentSq.removeClass('alive');
+							currentSq.addClass('dead');
+							var runGame = this.runGame;
+							setTimeout(function() {
+								runGame();
+							}, 200);
+
+							this.state.generationCount++;
+							$('#generations').html('Generations: ' + this.state.generationCount);
 					}
 				}
 			}
