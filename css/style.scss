@@ -9,6 +9,11 @@ $square-dead: black;
 
 body { text-align: center; }
 
+.title {
+	color: grey;
+	margin-bottom: 20px;
+}
+
 footer {
 	color: #666666;
 	width: 100%;
@@ -39,8 +44,8 @@ footer {
 }
 
 .control-buttons {
-	bottom: 10px;
-	top: 10px;
+	margin-bottom: 10px;
+	
 }
 
 .control-buttons button {
@@ -65,8 +70,6 @@ footer {
 	width: 10px;
 	border: thin solid gray;
 }
-
-.square:hover { background-color: $square-alive; }
 
 .dead { background-color: $square-dead; }
 
