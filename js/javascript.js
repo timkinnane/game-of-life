@@ -15,8 +15,7 @@ $(function() {
 					changeCell = this.changeCell,
 					squareObjects = [];
 
-			//Function that creates 50 squares to be returned 
-			//within a row element through the createRows function.
+			//Function that creates 50 squares to be returned within a row element through the createRows function.
 			var createSquares = function() {
 
 				//Object contructor for making squares.
@@ -29,7 +28,7 @@ $(function() {
 				//Empty array that <div> square elements will be pushed into.
 				var squares = [];
 
-				//Create 50 new square objects and 50 <div> square elements.
+				//Loop that creates 50 new square objects and 50 <div> square elements.
 				for(var i=50; i>0; i--) {
 					var newSquare = new squareObj(idNumber);
 					squareObjects.push(newSquare);
@@ -39,8 +38,7 @@ $(function() {
 				return squares;
 			};
 
-			//Function that creates 30 rows and calls upon the createSquare 
-			//function within each row element.
+			//Function that creates 30 rows and calls upon the createSquare function within each row element.
 			var createRows = function() {
 				var rows = [];
 				for(var i=30; i>0; i--) {
@@ -62,16 +60,15 @@ $(function() {
   		)
 		},
 
-		//Function that is used as an onClick event for each square
-		//to change the status of a clicked square from dead to alive or vice versa.
+		//Function that is used as an onClick event for each square to change the status of 
+		//a clicked square from dead to alive or vice versa.
 		changeCell: function(squareId, squareObjects) {
 			var clickedSquare = squareId.toString();
 
 			//Retrieves the object equivalent of clickedSquare from squareObjects array.
 			var squareObj = this.returnSquareObj(squareObjects, squareId);
 
-			//Toggles the 'dead' or 'alive' class and changes the object
-			//status attribute to match it.
+			//Toggles the 'dead' or 'alive' class and changes the object status attribute to match it.
 			if( $("#" + clickedSquare).hasClass('dead') ) {
 				$("#" + clickedSquare).removeClass('dead');
 				$("#" + clickedSquare).addClass('alive');
@@ -102,9 +99,8 @@ $(function() {
 			});
 		},
 
-		//Function that takes the squareId, then finds the
-		//square object within the squareObjects array that matches 
-		//the squareId, then returns it. 
+		//Function that takes the squareId, then finds the square object within the squareObjects 
+		//array that matches the squareId, then returns it. 
 		returnSquareObj: function(squareObjects, squareId) {
 			function findSquareById(square) {
 				return square.id == squareId;
