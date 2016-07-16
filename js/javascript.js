@@ -50,14 +50,41 @@ $(function() {
 				<div>
 					<h2 className="title">Conway's Game of Life</h2>
 					<div className="control-buttons row col-md-12">
-		  			<button className="btn-success">Run</button>
+		  			<button className="btn-success" onClick={this.runGame.bind(null, squareObjects)}>Run</button>
 		  			<button className="btn-info">Pause</button>
 		  			<button className="btn-danger" onClick={this.clearGame.bind(null, squareObjects)}>Clear</button>
-		  			<a id="generations">Generations: </a>
+		  			<a id="generations">Generations: 0</a>
 		  		</div>
 		  		<div id="grid">{createRows()}</div>
 	  		</div>
   		)
+		},
+
+		//Function that runs the Game of Life algorithm. 
+		runGame: function(squareObjects) {
+
+			//Iterates through all squareObjects. 
+			for(var i = 1499; i>=0; i--) {
+
+				//Define the 8 possible neighboring positions.
+				var center = this.returnSquareObj(squareObjects, i.toString()),
+						bottom = this.returnSquareObj(squareObjects, (i-50).toString()),
+						top = this.returnSquareObj(squareObjects, (i+50).toString()),
+						right = this.returnSquareObj(squareObjects, (i-1).toString()),
+						left = this.returnSquareObj(squareObjects, (i+1).toString()),
+						topLeft = this.returnSquareObj(squareObjects, (i+50+1).toString()),
+						topRight = this.returnSquareObj(squareObjects, (i+50-1).toString()),
+						bottomLeft = this.returnSquareObj(squareObjects, (i-50+1).toString()),
+						bottomRight = this.returnSquareObj(squareObjects, (i-50-1).toString());
+
+			if(bottom) {
+				if(bottom.status == 'alive' && center.status == 'alive') {
+					center.neighbors++;
+					console.log(center);
+				}
+			}
+
+			}
 		},
 
 		//Function that is used as an onClick event for each square to change the status of 
@@ -78,9 +105,12 @@ $(function() {
 				$("#" + clickedSquare).addClass('dead');
 				squareObj.status = 'dead';
 			}
+
+			//If neighboring cells exist, increment squareObj.neighbors by number of neighbors.
 		},
 
 		clearGame: function(squareObjects) {
+
 			//Resets the generation count back to 0.
 			this.setState({generationCount: 0});
 			$('#generations').html('Generations: 0');
@@ -107,11 +137,6 @@ $(function() {
 			}
 			var foundSquare = squareObjects.find(findSquareById);
 			return foundSquare;
-		},
-
-		//Function that runs the game. Game of Life rules algorithm goes here.
-		runGame: function() {
-
 		}
 	});
 
