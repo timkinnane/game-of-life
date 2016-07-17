@@ -77,7 +77,8 @@ $(function() {
 						topRight = this.returnSquareObj(squareObjects, (i+50-1).toString()),
 						bottomLeft = this.returnSquareObj(squareObjects, (i-50+1).toString()),
 						bottomRight = this.returnSquareObj(squareObjects, (i-50-1).toString()),
-						possiblePositions = [bottom,
+						possiblePositions = [
+																 bottom,
 																 top,
 																 right,
 																 left,
@@ -93,8 +94,6 @@ $(function() {
 						//If position is alive, increment center square's neighbor attribute by 1.
 						if(position.status == 'alive' && center.status == 'alive') {
 							center.neighbors++;
-							console.log(center);
-							console.log(position);
 						}
 					}
 				}
@@ -104,7 +103,20 @@ $(function() {
 				possiblePositions.filter(pos => {
 					checkPositions(pos);
 				});
+
+				//Rules of reproduction, death, or standstill.
+				if(center) { 
+					//if square had less than two neighbors, change status to dead.
+					if(center.neighbors < 2) {
+						center.status = 'dead';
+					
+						//Changes the div element from 'alive' to 'dead'.
+						$('#' + center.id.toString()).removeClass('alive');
+						$('#' + center.id.toString()).addClass('dead');
+					}
+				}
 			}
+			//End of for loop.
 		},
 
 		//Function that is used as an onClick event for each square to change the status of 
