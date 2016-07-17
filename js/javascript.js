@@ -67,6 +67,8 @@ $(function() {
 			for(var i = 1499; i>=0; i--) {
 
 				//Define the 8 possible neighboring positions.
+				//Include all 8 positions within possiblePositions array to be used
+				//with checkPositions function.
 				var center = this.returnSquareObj(squareObjects, i.toString()),
 						bottom = this.returnSquareObj(squareObjects, (i-50).toString()),
 						top = this.returnSquareObj(squareObjects, (i+50).toString()),
@@ -75,17 +77,37 @@ $(function() {
 						topLeft = this.returnSquareObj(squareObjects, (i+50+1).toString()),
 						topRight = this.returnSquareObj(squareObjects, (i+50-1).toString()),
 						bottomLeft = this.returnSquareObj(squareObjects, (i-50+1).toString()),
-						bottomRight = this.returnSquareObj(squareObjects, (i-50-1).toString());
+						bottomRight = this.returnSquareObj(squareObjects, (i-50-1).toString()),
+						possiblePositions = [center,
+																 bottom,
+																 top,
+																 right,
+																 left,
+																 topLeft,
+																 topRight,
+																 bottomLeft,
+																 bottomRight
+																];
 
-			if(bottom) {
-				if(bottom.status == 'alive' && center.status == 'alive') {
-					center.neighbors++;
-					console.log(center);
+			function checkPositions(position) {
+				//If position exists.
+				if(position) {
+					//If position is alive, increment center square;s neighbor by 1.
+					if(position.status == 'alive' && center.status == 'alive') {
+						center.neighbors++;
+						console.log(center);
+						console.log(position);
+					}
 				}
 			}
 
-			}
-		},
+			//Iterates through all posible positions of each square and passes it to
+			//checkPositions function as a parameter.
+			possiblePositions.filter(pos => {
+				checkPositions(pos);
+			});
+		}
+	},
 
 		//Function that is used as an onClick event for each square to change the status of 
 		//a clicked square from dead to alive or vice versa.
@@ -124,7 +146,7 @@ $(function() {
 			}
 
 			//Sets status attribute of all square objects to "dead".
-			squareObjects.filter(function(sqObj){
+			squareObjects.filter(sqObj => {
 				sqObj.status = "dead";
 			});
 		},
