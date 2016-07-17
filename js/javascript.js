@@ -64,8 +64,7 @@ $(function() {
 		runGame: function(squareObjects) {
 
 			//Iterates through all squareObjects. 
-			for(var i = 1499; i>=0; i--) {
-
+			for(var i = 1500; i>=0; i--) {
 				//Define the 8 possible neighboring positions.
 				//Include all 8 positions within possiblePositions array to be used
 				//with checkPositions function.
@@ -78,8 +77,7 @@ $(function() {
 						topRight = this.returnSquareObj(squareObjects, (i+50-1).toString()),
 						bottomLeft = this.returnSquareObj(squareObjects, (i-50+1).toString()),
 						bottomRight = this.returnSquareObj(squareObjects, (i-50-1).toString()),
-						possiblePositions = [center,
-																 bottom,
+						possiblePositions = [bottom,
 																 top,
 																 right,
 																 left,
@@ -89,25 +87,25 @@ $(function() {
 																 bottomRight
 																];
 
-			function checkPositions(position) {
-				//If position exists.
-				if(position) {
-					//If position is alive, increment center square;s neighbor by 1.
-					if(position.status == 'alive' && center.status == 'alive') {
-						center.neighbors++;
-						console.log(center);
-						console.log(position);
+				function checkPositions(position) {
+					//If position and center exists.
+					if(position) {
+						//If position is alive, increment center square's neighbor attribute by 1.
+						if(position.status == 'alive' && center.status == 'alive') {
+							center.neighbors++;
+							console.log(center);
+							console.log(position);
+						}
 					}
 				}
-			}
 
-			//Iterates through all posible positions of each square and passes it to
-			//checkPositions function as a parameter.
-			possiblePositions.filter(pos => {
-				checkPositions(pos);
-			});
-		}
-	},
+				//Iterates through all posible positions of current square and passes it to
+				//checkPositions function as a parameter.
+				possiblePositions.filter(pos => {
+					checkPositions(pos);
+				});
+			}
+		},
 
 		//Function that is used as an onClick event for each square to change the status of 
 		//a clicked square from dead to alive or vice versa.
@@ -127,8 +125,6 @@ $(function() {
 				$("#" + clickedSquare).addClass('dead');
 				squareObj.status = 'dead';
 			}
-
-			//If neighboring cells exist, increment squareObj.neighbors by number of neighbors.
 		},
 
 		clearGame: function(squareObjects) {
