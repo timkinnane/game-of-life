@@ -106,13 +106,16 @@ $(function() {
 
 				//Rules of reproduction, death, or standstill.
 				if(center) { 
-					//if square had less than two neighbors, change status to dead.
-					if(center.neighbors < 2) {
+					//if square had less than two neighbors OR if square had more than 3 neighbors,
+					//change status to dead.
+					if(center.neighbors < 2 || center.neighbors > 3) {
 						center.status = 'dead';
 					
 						//Changes the div element from 'alive' to 'dead'.
 						$('#' + center.id.toString()).removeClass('alive');
 						$('#' + center.id.toString()).addClass('dead');
+					} else if(center.neighbors == 2 || center.neighbors == 3) {
+						//Lives on to next generation.
 					}
 				}
 			}
