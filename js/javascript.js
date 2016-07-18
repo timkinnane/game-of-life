@@ -92,7 +92,7 @@ $(function() {
 					//If position and center exists.
 					if(position) {
 						//If position is alive, increment center square's neighbor attribute by 1.
-						if(position.status == 'alive' && center.status == 'alive') {
+						if(position.status == 'alive') {
 							center.neighbors++;
 						}
 					}
@@ -108,14 +108,18 @@ $(function() {
 				if(center) { 
 					//if square had less than two neighbors OR if square had more than 3 neighbors,
 					//change status to dead.
-					if(center.neighbors < 2 || center.neighbors > 3) {
+					if(center.neighbors < 2 || center.neighbors > 3 && center.status == 'alive') {
 						center.status = 'dead';
 					
 						//Changes the div element from 'alive' to 'dead'.
 						$('#' + center.id.toString()).removeClass('alive');
 						$('#' + center.id.toString()).addClass('dead');
-					} else if(center.neighbors == 2 || center.neighbors == 3) {
+					} else if(center.neighbors == 2 || center.neighbors == 3 && center.status == 'alive') {
 						//Lives on to next generation.
+					} else if(center.status == 'dead' && center.neighbors == 3) {
+						center.status = 'alive';
+						$('#' + center.id.toString()).removeClass('dead');
+						$('#' + center.id.toString()).addClass('alive');
 					}
 				}
 			}
