@@ -114,8 +114,11 @@ $(function() {
 						//Changes the div element from 'alive' to 'dead'.
 						$('#' + center.id.toString()).removeClass('alive');
 						$('#' + center.id.toString()).addClass('dead');
-					} else if(center.neighbors == 2 || center.neighbors == 3 && center.status == 'alive') {
-						//Lives on to next generation.
+
+						//if square has 2 or 3 neighbors while alive, live on to next generation.
+					}	else if(center.neighbors == 2 || center.neighbors == 3 && center.status == 'alive') {
+						
+						//if square is dead and has 3 neighbors, it comes to life.
 					} else if(center.status == 'dead' && center.neighbors == 3) {
 						center.status = 'alive';
 						$('#' + center.id.toString()).removeClass('dead');
