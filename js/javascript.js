@@ -33,7 +33,9 @@ $(function() {
 				for(var i=50; i>0; i--) {
 					var newSquare = new squareObj(idNumber);
 					squareObjects.push(newSquare);
-					squares.push(<div className='square dead' key={idNumber} onClick={changeCell.bind(null, idNumber, squareObjects)} id={idNumber} ></div>);
+					squares.push(<div className='square dead' key={idNumber} 
+												onClick={changeCell.bind(null, idNumber, squareObjects)} 
+												id={idNumber} ></div>);
 					idNumber--;
 				}
 				return squares;
@@ -70,6 +72,7 @@ $(function() {
 					//If position is alive, increment center square's neighbor attribute by 1.
 					if(position.status == 'alive') {
 						center.neighbors++;
+						console.log(position)
 					}
 				}
 			}
@@ -78,9 +81,11 @@ $(function() {
 			function decrementNeighbors(position) {
 				if(position.neighbors >= 1) {
 					position.neighbors--;
+					console.log(position)
 				}
 			}
 
+			//Currently not being used.
 			function incremateNeighbors(position) {
 				if(position) {
 					position.neighbors++;
@@ -166,6 +171,7 @@ $(function() {
 						$('#' + center.id.toString()).removeClass('dead');
 						$('#' + center.id.toString()).addClass('alive');
 					}
+					//console.log(center)
 				}
 			}
 			//End of second for loop.
