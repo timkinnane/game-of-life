@@ -72,17 +72,20 @@ $(function() {
 					//If position is alive, increment center square's neighbor attribute by 1.
 					if(position.status == 'alive') {
 						center.neighbors++;
-						console.log(position)
+						//console.log(position)
 					}
 				}
 			}
 
 			//Function that takes all positions and decrements the neighbors by 1.
 			function decrementNeighbors(position) {
-				if(position.neighbors >= 1) {
-					position.neighbors--;
-					console.log(position)
-				}
+				alert('decrement function run!');
+				position.filter( pos => {
+					if(pos.neighbors >= 1) {
+						pos.neighbors--;
+						alert('DECREMENTED: '+ pos.id + " now has " + pos.neighbors);
+					}
+				});
 			}
 
 			//Currently not being used.
@@ -149,12 +152,13 @@ $(function() {
 
 				//Rules of reproduction, death, or standstill.
 				if(center) {
-					//if square had less than two neighbors OR if square had more than 3 neighbors,
+					//if square had less than two neighbors OR if square had more than 3 neighbors AND is alive
 					//change status to dead.
-					if(center.neighbors < 2 || center.neighbors > 3 && center.status == 'alive') {
+					if((center.neighbors < 2 || center.neighbors > 3) && center.status == 'alive') {
 						//Sets status of current square to dead, and decrements all neighbors squares by 1.
 						center.status = 'dead';
 						center.neighbors = 0;
+						alert('changing status of ' + center.id + ' to ' + center.status);
 						decrementNeighbors(possiblePositions);
 					
 						//Changes the div element from 'alive' to 'dead'.
