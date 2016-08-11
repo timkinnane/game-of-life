@@ -21,7 +21,7 @@ $(function() {
 				//Object contructor for making squares.
 				function squareObj(id) {
 					this.status = 'dead';
-					this.state = 'unchecked';
+					this.state = 'unchanged';
 					this.neighbors = 0;
 					this.id = id;
 				}
@@ -66,24 +66,23 @@ $(function() {
 		//Function that runs the Game of Life algorithm. 
 		runGame: function(squareObjects) {
 
-			function checkPositions(position) {
-				//If position and center exists.
-				if(position) {
-					//If position is alive, increment center square's neighbor attribute by 1.
-					if(position.status == 'alive') {
-						center.neighbors++;
-						//console.log(position)
-					}
+			function checkPositions(position, y) {
+				// If position and center exists.
+				// and if position is alive and unchanged, increment center square's neighbor attribute by 1.
+				if(position && y == 2 && position.status == 'alive') {
+					center.neighbors++;
+				} else if(position && y == 1 && position.status == 'alive' && 
+									position.state == 'changed') {
+					center.neighbors++;
 				}
 			}
 
 			//Function that takes all positions and decrements the neighbors by 1.
 			function decrementNeighbors(position) {
-				alert('decrement function run!');
 				position.filter( pos => {
 					if(pos.neighbors >= 1) {
 						pos.neighbors--;
-						alert('DECREMENTED: '+ pos.id + " now has " + pos.neighbors);
+						//alert('DECREMENTED: '+ pos.id + " now has " + pos.neighbors);
 					}
 				});
 			}
@@ -95,90 +94,116 @@ $(function() {
 				}
 			}
 
-			//Iterates through all squareObjects. 
-			for(var i = 1500; i>=0; i--) {
-				//Define the 8 possible neighboring positions.
-				//Include all 8 positions within possiblePositions array to be used
-				//with checkPositions function.
-				var center = this.returnSquareObj(squareObjects, i.toString()),
-						bottom = this.returnSquareObj(squareObjects, (i-50).toString()),
-						top = this.returnSquareObj(squareObjects, (i+50).toString()),
-						right = this.returnSquareObj(squareObjects, (i-1).toString()),
-						left = this.returnSquareObj(squareObjects, (i+1).toString()),
-						topLeft = this.returnSquareObj(squareObjects, (i+50+1).toString()),
-						topRight = this.returnSquareObj(squareObjects, (i+50-1).toString()),
-						bottomLeft = this.returnSquareObj(squareObjects, (i-50+1).toString()),
-						bottomRight = this.returnSquareObj(squareObjects, (i-50-1).toString()),
-						possiblePositions = [
-																 bottom,
-																 top,
-																 right,
-																 left,
-																 topLeft,
-																 topRight,
-																 bottomLeft,
-																 bottomRight
-																];
+			for(var y = 2; y>0; y--) {
+				//Iterates through all squareObjects. 
+				for(var i = 1500; i>=0; i--) {
+					//Define the 8 possible neighboring positions.
+					//Include all 8 positions within possiblePositions array to be used
+					//with checkPositions function.
+					var center = this.returnSquareObj(squareObjects, i.toString()),
+							bottom = this.returnSquareObj(squareObjects, (i-50).toString()),
+							top = this.returnSquareObj(squareObjects, (i+50).toString()),
+							right = this.returnSquareObj(squareObjects, (i-1).toString()),
+							left = this.returnSquareObj(squareObjects, (i+1).toString()),
+							topLeft = this.returnSquareObj(squareObjects, (i+50+1).toString()),
+							topRight = this.returnSquareObj(squareObjects, (i+50-1).toString()),
+							bottomLeft = this.returnSquareObj(squareObjects, (i-50+1).toString()),
+							bottomRight = this.returnSquareObj(squareObjects, (i-50-1).toString()),
+							possiblePositions = [
+																	 bottom,
+																	 top,
+																	 right,
+																	 left,
+																	 topLeft,
+																	 topRight,
+																	 bottomLeft,
+																	 bottomRight
+																	];
 
-				//Iterates through all posible positions of current square and passes it to
-				//checkPositions function as a parameter.
-				possiblePositions.filter(pos => {
-					checkPositions(pos);
-				});
-			}
-			//End of for loop.
-
-			//Second for loop that determines if a cell dies, reproduces, or stands still.
-			for(var i = 1500; i>=0; i--) {
-				var center = this.returnSquareObj(squareObjects, i.toString()),
-						bottom = this.returnSquareObj(squareObjects, (i-50).toString()),
-						top = this.returnSquareObj(squareObjects, (i+50).toString()),
-						right = this.returnSquareObj(squareObjects, (i-1).toString()),
-						left = this.returnSquareObj(squareObjects, (i+1).toString()),
-						topLeft = this.returnSquareObj(squareObjects, (i+50+1).toString()),
-						topRight = this.returnSquareObj(squareObjects, (i+50-1).toString()),
-						bottomLeft = this.returnSquareObj(squareObjects, (i-50+1).toString()),
-						bottomRight = this.returnSquareObj(squareObjects, (i-50-1).toString()),
-						possiblePositions = [
-																 bottom,
-																 top,
-																 right,
-																 left,
-																 topLeft,
-																 topRight,
-																 bottomLeft,
-																 bottomRight
-																];
-
-				//Rules of reproduction, death, or standstill.
-				if(center) {
-					//if square had less than two neighbors OR if square had more than 3 neighbors AND is alive
-					//change status to dead.
-					if((center.neighbors < 2 || center.neighbors > 3) && center.status == 'alive') {
-						//Sets status of current square to dead, and decrements all neighbors squares by 1.
-						center.status = 'dead';
-						center.neighbors = 0;
-						alert('changing status of ' + center.id + ' to ' + center.status);
-						decrementNeighbors(possiblePositions);
-					
-						//Changes the div element from 'alive' to 'dead'.
-						$('#' + center.id.toString()).removeClass('alive');
-						$('#' + center.id.toString()).addClass('dead');
-
-						//if square has 2 or 3 neighbors while alive, live on to next generation.
-					}	else if(center.neighbors == 2 || center.neighbors == 3 && center.status == 'alive') {
-						
-						//if square is dead and has 3 neighbors, it comes to life.
-					} else if(center.status == 'dead' && center.neighbors == 3) {
-						center.status = 'alive';
-
-						$('#' + center.id.toString()).removeClass('dead');
-						$('#' + center.id.toString()).addClass('alive');
-					}
-					//console.log(center)
+					//Iterates through all posible positions of current square and passes it to
+					//checkPositions function as a parameter.
+					possiblePositions.filter(pos => {
+						checkPositions(pos, y);
+					});
 				}
+				//End of for loop.
+
+				//Second for loop that determines if a cell dies, reproduces, or live.
+				for(var i = 1500; i>=0; i--) {
+					var center = this.returnSquareObj(squareObjects, i.toString()),
+							bottom = this.returnSquareObj(squareObjects, (i-50).toString()),
+							top = this.returnSquareObj(squareObjects, (i+50).toString()),
+							right = this.returnSquareObj(squareObjects, (i-1).toString()),
+							left = this.returnSquareObj(squareObjects, (i+1).toString()),
+							topLeft = this.returnSquareObj(squareObjects, (i+50+1).toString()),
+							topRight = this.returnSquareObj(squareObjects, (i+50-1).toString()),
+							bottomLeft = this.returnSquareObj(squareObjects, (i-50+1).toString()),
+							bottomRight = this.returnSquareObj(squareObjects, (i-50-1).toString()),
+							possiblePositions = [
+																	 bottom,
+																	 top,
+																	 right,
+																	 left,
+																	 topLeft,
+																	 topRight,
+																	 bottomLeft,
+																	 bottomRight
+																	];
+
+					//Rules of reproduction, death, or standstill.
+					if(center && y == 2) {
+						//if square had less than two neighbors OR if square had more than 3 neighbors AND is alive
+						//change status to dead.
+						if((center.neighbors < 2 || center.neighbors > 3) && center.status == 'alive') {
+
+							//Sets status of current square to dead, and decrements all neighbors squares by 1.
+							center.status = 'dead';
+							center.neighbors = 0;
+							alert('changing status of ' + center.id + ' to ' + center.status);
+							decrementNeighbors(possiblePositions);
+
+							// Changes state of square to "changed".
+							center.state = 'changed';
+						
+							//Changes the div element from 'alive' to 'dead'.
+							$('#' + center.id.toString()).removeClass('alive');
+							$('#' + center.id.toString()).addClass('dead');
+
+							//if square has 2 or 3 neighbors while alive, live on to next generation.
+						}	else if(center.neighbors == 2 || center.neighbors == 3 && 
+											center.status == 'alive') {
+							
+							//if square is dead and has 3 neighbors, it comes to life.
+						} else if(center.status == 'dead' && center.neighbors == 3) {
+
+							alert(center.id + " COMES TO LIFE!");
+							center.status = 'alive';
+							center.state = 'changed';
+
+							$('#' + center.id.toString()).removeClass('dead');
+							$('#' + center.id.toString()).addClass('alive');
+						}
+						
+						// these rules apply to the second loop of the runGame function.
+					} else if(center && y == 1) {
+						if(center.status == 'dead' && center.neighbors == 3) {
+							alert(center.id + " COMES TO LIFE!");
+							center.status = 'alive';
+							center.state = 'changed';
+
+							$('#' + center.id.toString()).removeClass('dead');
+							$('#' + center.id.toString()).addClass('alive');
+						}
+					}
+
+					if(y == 1) {
+						center.state = 'unchanged';
+					}
+
+					//End of second for loop.
+				}
+			// End of loop wrapper.
 			}
-			//End of second for loop.
 		},
 
 		//Function that is used as an onClick event for each square to change the status of 
