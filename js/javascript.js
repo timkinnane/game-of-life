@@ -82,7 +82,7 @@ $(function() {
 				position.filter( pos => {
 					if(pos.neighbors >= 1) {
 						pos.neighbors--;
-						//alert('DECREMENTED: '+ pos.id + " now has " + pos.neighbors);
+						//console.log('DECREMENTED: '+ pos.id + " now has " + pos.neighbors);
 					}
 				});
 			}
@@ -159,7 +159,7 @@ $(function() {
 							//Sets status of current square to dead, and decrements all neighbors squares by 1.
 							center.status = 'dead';
 							center.neighbors = 0;
-							alert('changing status of ' + center.id + ' to ' + center.status);
+							console.log('changing status of ' + center.id + ' to ' + center.status);
 							decrementNeighbors(possiblePositions);
 
 							// Changes state of square to "changed".
@@ -176,7 +176,7 @@ $(function() {
 							//if square is dead and has 3 neighbors, it comes to life.
 						} else if(center.status == 'dead' && center.neighbors == 3) {
 
-							alert(center.id + " COMES TO LIFE!");
+							console.log(center.id + " COMES TO LIFE!");
 							center.status = 'alive';
 							center.state = 'changed';
 
@@ -187,7 +187,7 @@ $(function() {
 						// these rules apply to the second loop of the runGame function.
 					} else if(center && y == 1) {
 						if(center.status == 'dead' && center.neighbors == 3) {
-							alert(center.id + " COMES TO LIFE!");
+							console.log(center.id + " COMES TO LIFE!");
 							center.status = 'alive';
 							center.state = 'changed';
 
@@ -196,10 +196,10 @@ $(function() {
 						}
 					}
 
-					if(y == 1) {
+					// Set state of every square back to 'unchanged' when loop ends.
+					if(y == 1 && center) {
 						center.state = 'unchanged';
 					}
-
 					//End of second for loop.
 				}
 			// End of loop wrapper.
