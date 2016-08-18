@@ -65,15 +65,19 @@ $(function() {
 
 		//Function that runs the Game of Life algorithm. 
 		runGame: function(squareObjects) {
-
+			var bank = [],
+			returnSq = this.returnSquareObj,
+			center, bottom, top, left, right, topLeft,
+			topRight, bottomLeft, bottomRight, possiblePositions;
+			
 			function checkPositions(position) {
 				// If position and center exists.
 				// and if position is alive and unchanged, increment center square's neighbor attribute by 1.
 				if(position && position.status == 'alive') {
 					center.neighbors++;
-				} else if(position && position.status == 'alive' && 
-									position.state == 'changed') {
-					center.neighbors++;
+					if(bank.indexOf(center) == -1) {
+						bank.push(center);
+					}
 				}
 			}
 
@@ -87,29 +91,48 @@ $(function() {
 				});
 			}
 
-			//Iterates through all squareObjects. 
-			for(var i = 1500; i>=0; i--) {
+			function defineNeighbors(i) {
 				//Define the 8 possible neighboring positions.
 				//Include all 8 positions within possiblePositions array to be used
 				//with checkPositions function.
-				var center = this.returnSquareObj(squareObjects, i.toString()),
-						bottom = this.returnSquareObj(squareObjects, (i-50).toString()),
-						top = this.returnSquareObj(squareObjects, (i+50).toString()),
-						right = this.returnSquareObj(squareObjects, (i-1).toString()),
-						left = this.returnSquareObj(squareObjects, (i+1).toString()),
-						topLeft = this.returnSquareObj(squareObjects, (i+50+1).toString()),
-						topRight = this.returnSquareObj(squareObjects, (i+50-1).toString()),
-						bottomLeft = this.returnSquareObj(squareObjects, (i-50+1).toString()),
-						bottomRight = this.returnSquareObj(squareObjects, (i-50-1).toString()),
-						possiblePositions = [bottom,top,right,left,topLeft,topRight,bottomLeft,bottomRight];
+				center = returnSq(squareObjects, i.toString());
+				bottom = returnSq(squareObjects, (i-50).toString());
+				top = returnSq(squareObjects, (i+50).toString());
+				right = returnSq(squareObjects, (i-1).toString());
+				left = returnSq(squareObjects, (i+1).toString());
+				topLeft = returnSq(squareObjects, (i+50+1).toString());
+				topRight = returnSq(squareObjects, (i+50-1).toString());
+				bottomLeft = returnSq(squareObjects, (i-50+1).toString());
+				bottomRight = returnSq(squareObjects, (i-50-1).toString());
+				possiblePositions = [bottom,top,right,left,topLeft,topRight,bottomLeft,bottomRight];
+			}
+
+			//Iterates through all squareObjects. 
+			for(var i = 1500; i>=0; i--) {
+				// Passes numbers 0-1500 into defineNeighbors() to check all 1500 squares on the grid.
+				// and increment the neighbors property if necessary. 
+				defineNeighbors(i);
 
 				//Iterates through all posible positions of current square and passes it to
 				//checkPositions function as a parameter.
 				possiblePositions.filter(pos => {
 					checkPositions(pos);
 				});
+			// End of for loop.
 			}
-			//End of for loop.
+
+			bank.filter(x => {
+				console.log(x);
+			});
+
+			// Function that changes the state of each square based on how many neighbors it has.
+			function changeState() {
+				for(var i = 1500; i>=0; i--) {
+
+				}
+			}
+
+
 		},
 
 		//Function that is used as an onClick event for each square to change the status of 
